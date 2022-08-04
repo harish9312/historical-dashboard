@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Inject, Post, Req, Res, Request, Response } from '@nestjs/common';
-import { response } from 'express';
+import { Body, Controller, Get, Inject, Post, Req, Res } from '@nestjs/common';
+import { Response, Request } from 'type';
 import { IEmployeeBody } from './employee.dto';
 import { EmployeeService } from './employee.service';
 
@@ -18,7 +18,7 @@ export class EmployeeController {
 
 
   @Post('/create-employee')
-  async createEmployee(@Req() req: Request, @Res() res: any, @Body() payload: IEmployeeBody): Promise<{}> {
+  async createEmployee(@Req() req: Request, @Res() res: Response, @Body() payload: IEmployeeBody): Promise<{}> {
     console.log('>> payload', payload);
     try {
       const respnose = await this.empService.createEmployee(payload)
@@ -28,6 +28,14 @@ export class EmployeeController {
     } catch (error) {
       throw error
     }
+  }
+
+  @Get('/:emp_id')
+  async getEmployeeById(@Req() req: Request, @Res() res: Response) {
+    const emp = await this.empService.getEmployee(req.params.emp_id)
+    return res.send({
+      emp
+    })
   }
 
 }
