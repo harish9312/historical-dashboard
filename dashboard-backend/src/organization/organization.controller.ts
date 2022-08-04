@@ -22,9 +22,18 @@ export class OrganizationController {
     @Get('/organization-empployees/:from/:to')
     async getOrganizationEmployeesByDateRange(@Req() req: Request, @Res() res: Response) {
         console.log('>> req.query', req.query);
-        const employees = await this.orgService.getEmployeeByDateRange(req.params.from, req.params.to, req.query)
+        const employees = await this.orgService.getEmployeesByDateRange(req.params.from, req.params.to, req.query, req.query.key)
         return res.send({
             employees
+        })
+    }
+
+    @Get('/organization-employee/:from_date/:to_date/:from_month/:to_month')
+    async getOrganizationDataByRange(@Req() req: Request, @Res() res: Response) {
+        const { from_date, to_date, from_month, to_month } = req.params;
+        const orgData = await this.orgService.getRangeData(from_date, to_date, from_month, to_month)
+        return res.send({
+            orgData
         })
     }
 

@@ -30,6 +30,9 @@ export class Employee {
     @Prop()
     year_added: string
 
+    @Prop()
+    ctc: string
+
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee)

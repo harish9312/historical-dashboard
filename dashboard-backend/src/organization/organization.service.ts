@@ -15,7 +15,32 @@ export class OrganizationService {
         return await this.organizationModel.create(org_body)
     }
 
-    async getEmployeeByDateRange(from, to, indexes) {
-        return await this.employeeModel.find({ month_added: { $gte: from, $lte: to } }, { _id: 0, ...indexes })
+    async getEmployeesByDateRange(from, to, indexes, key) {
+        return await this.employeeModel.find({ [key]: { $gte: from, $lte: to } }, { _id: 1, ...indexes })
+    }
+
+    async getOrganizationHistoryByKey(from, to, indexes, key) {
+        return await this.employeeModel.find({ [key]: { $gte: from, $lte: to } }, { _id: 1, ...indexes })
+    }
+
+    async getRangeData(from_date, to_date, from_month, to_month) {
+        return await this.employeeModel.aggregate([
+            { $match: { $and: [{ month_added: { "$gt": from_month, $lt: to_month } }, { date_added: { "$gt": from_date, $lt: to_date } }] } },
+            {
+                $project: {
+                    date_added: 1,
+                    month_added: 1
+
+                }
+            },
+            {
+                $group: {
+                    _id: { date_added: "$date_added" },
+                    date_added: { $first: "$date_added" },
+                    month_added: { $first: "$month_added" },
+                    totalEmployee: { $sum: 1 },
+                }
+            }
+        ])
     }
 }
