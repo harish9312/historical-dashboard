@@ -30,17 +30,17 @@ export class OrganizationService {
                 $project: {
                     date_added: 1,
                     month_added: 1
-
                 }
             },
             {
                 $group: {
-                    _id: { date_added: "$date_added" },
+                    _id: { _id: "$month_added" },
                     date_added: { $first: "$date_added" },
                     month_added: { $first: "$month_added" },
                     totalEmployee: { $sum: 1 },
+                    id: { $first : "$_id" }
                 }
             }
         ])
     }
-}
+}``
