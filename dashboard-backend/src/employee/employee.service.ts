@@ -18,6 +18,7 @@ export class EmployeeService {
         let month = [];
         let year = [];
         let i = 1;
+        const teams = ["React", "Angular", "Java", "DevOps"]
         while (i <= 10) {
             const mom = moment(
                 new Date(+new Date() - Math.floor(Math.random() * 10000000000))
@@ -40,7 +41,8 @@ export class EmployeeService {
                 "date_added": date[this.getRandomInt(10)],
                 "month_added": month[this.getRandomInt(10)],
                 "year_added": year[this.getRandomInt(10)],
-                "ctc": this.getRandomInt(50)
+                "ctc": this.getRandomInt(50),
+                team: teams[this.getRandomInt(4)]
             })
             allPromise.push(data)
             j++

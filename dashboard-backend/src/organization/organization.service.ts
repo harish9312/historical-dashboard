@@ -38,9 +38,9 @@ export class OrganizationService {
                     date_added: { $first: "$date_added" },
                     month_added: { $first: "$month_added" },
                     totalEmployee: { $sum: 1 },
-                    id: { $first : "$_id" }
+                    id: { $first: "$_id" }
                 }
             }
         ])
     }
-}``
+}

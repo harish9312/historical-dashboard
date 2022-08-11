@@ -33,6 +33,9 @@ export class Employee {
     @Prop()
     ctc: string
 
+    @Prop()
+    team: string
+
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee)
